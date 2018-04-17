@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Find Match Parents</title>
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <!-- <link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'> -->
+  </head>
+  <body>
+    {% include "navbar.html" %}
+    <div class="container">
+        <div align="center">
+          <canvas id="myChart" style="max-width: 1000px;"></canvas>
+        </div>
+    </div>
+
+
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+    <script>
+        var ctx = document.getElementById("myChart").getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ["Informative", "Uninformative", "Mismatch"],
+                datasets: [{
+                    label: 'Percentage',
+                    data: ['{{ percentInformative }}', '{{ percentUninformative }}', '{{ percentMismatch }}'],
+                    backgroundColor: [
+                        'rgba(102, 255, 102, 0.2)',
+                        'rgba(255, 255, 102, 0.2)',
+                        'rgba(255, 102, 102, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(102, 204, 0, 1)',
+                        'rgba(255, 255, 0, 1)',
+                        'rgba(204, 0, 0, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                title: {
+                  display: true,
+                  text: 'Percantage of Informative, Uninformative, Mismatch',
+                  fontSize: 20
+                },
+                legend: {
+                  display: false
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            suggestedMax: 100
+                        }
+                    }]
+                },
+                animation: {
+                  duration: 1,
+                  onComplete: function () {
+                    var chartInstance = this.chart,
+                    ctx = chartInstance.ctx;
+                    ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'bottom';
+
+                    this.data.datasets.forEach(function (dataset, i) {
+                      var meta = chartInstance.controller.getDatasetMeta(i);
+                      meta.data.forEach(function (bar, index) {
+                        var data = dataset.data[index];                            
+                        ctx.fillText(data, bar._model.x, bar._model.y - 5);
+                      });
+                    });
+                  }
+              }
+            }
+        });
+        </script>
+  </body>
+</html>

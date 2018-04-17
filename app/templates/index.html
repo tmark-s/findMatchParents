@@ -1,29 +1,33 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Find Match Parents</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
-  </head>
-  <body>
-    <div class="container">
-      <fieldset>
-        <form action="/result" method="post", enctype='multipart/form-data'>
-          <div>
-            <input name="child" type="file" class="ghost-input" required>
+{% extends "layout.html" %}
+
+{% block body %}
+{% include "navbar.html" %}
+<div class="container">
+    <fieldset>
+      <form action="/result" method="post", enctype='multipart/form-data'>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Child File</span>
           </div>
-          <div>
-            <input name="dad" type="file" class="ghost-input" required>
+          <div class="custom-file">
+            <input name="child" type="file" class="custom-file-input" id="inputGroupFile01" required>
+            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
           </div>
-          <div>
-            <input name="mom" type="file" class="ghost-input" required>
-          </div>
-          <div>
-            <input type="submit" class="ghost-button" value="Submit">
-          </div>
-        </form>
-      </fieldset>
-    </div>
-  </body>
-</html>
+        </div>
+          
+        
+        <div>
+          <input name="dad" type="file" class="ghost-input" required>
+        </div>
+        <div>
+          <input name="mom" type="file" class="ghost-input" required>
+        </div>
+        <div>
+          <input type="submit" class="ghost-button" value="Submit">
+        </div>
+      </form>
+    </fieldset>
+  </div>
+  
+
+{% endblock %}

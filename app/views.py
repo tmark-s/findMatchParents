@@ -471,10 +471,74 @@ def upload_file () :
   percentUninformative = round((uninformative/total)*100, 2)
   percentMismatch = round((mismatch/total)*100, 2)
   
-  os.remove("./uploads/" + child + ".vcf")
-  os.remove("./uploads/" + dad + ".vcf")
-  os.remove("./uploads/" + mom + ".vcf")
-  os.remove("./uploads/" + child + "," + dad + "," + mom + ".vcf")
+  try : 
+    os.remove("./uploads/" + child + ".vcf")
+  except :
+    print('cannot delete')
+
+  try :
+    os.remove("./uploads/" + dad + ".vcf")
+  except :
+    print('cannot delete')
+
+  try :
+    os.remove("./uploads/" + mom + ".vcf")
+  except :
+    print('cannot delete')
+
+  try : 
+    os.remove("./uploads/" + child + "," + dad + "," + mom + ".vcf")
+  except :
+    print('cannot delete')
+
+  # same family
+  same_informative_avg = 71.81
+  same_informative_stdev = 1.07
+  same_informative_max = float(round(same_informative_avg + 3*same_informative_stdev, 2))
+  same_informative_min = float(round(same_informative_avg - 3*same_informative_stdev, 2))
+  same_mismatch_avg = 0.32
+  same_mismatch_stdev = 0.13
+  same_mismatch_max = float(round(same_mismatch_avg + 3*same_mismatch_stdev, 2))
+  same_mismatch_min = float(round(same_mismatch_avg - 3*same_mismatch_stdev, 2))
+
+  # not dad or mom
+  not1_informative_avg = 60.16
+  not1_informative_stdev = 2.04
+  not1_informative_max = float(round(not1_informative_avg + 3*not1_informative_stdev, 2))
+  not1_informative_min = float(round(not1_informative_avg - 3*not1_informative_stdev, 2))
+  not1_mismatch_avg = 17.82
+  not1_mismatch_stdev = 1.41
+  not1_mismatch_max = float(round(not1_mismatch_avg + 3*not1_mismatch_stdev, 2))
+  not1_mismatch_min = float(round(not1_mismatch_avg - 3*not1_mismatch_stdev, 2))
+
+  # not dad and mom
+  not_informative_avg = 55.89
+  not_informative_stdev = 3.12
+  not_informative_max = float(round(not_informative_avg + 3*not_informative_stdev, 2))
+  not_informative_min = float(round(not_informative_avg - 3*not_informative_stdev, 2))
+  not_mismatch_avg = 26.17
+  not_mismatch_stdev = 2.52
+  not_mismatch_max = float(round(not_mismatch_avg + 3*not_mismatch_stdev, 2))
+  not_mismatch_min = float(round(not_mismatch_avg - 3*not_mismatch_stdev, 2))
+
+  print(percentInformative)
+  print(percentMismatch)
+  print(same_informative_max)
+  print(same_informative_min)
+  print(same_mismatch_max)
+  print(same_mismatch_min)
+
+  result = ""
+
+  if (float(percentInformative) >= same_informative_min) and (float(percentInformative) <= same_informative_max) and (float(percentMismatch) >= same_mismatch_min) and (float(percentMismatch) <= same_mismatch_max) :
+    result = "Same Family"
+  elif (float(percentInformative) >= not1_informative_min) and (float(percentInformative) <= not1_informative_max) and (float(percentMismatch) >= not1_mismatch_min) and (float(percentMismatch) <= not1_mismatch_max) :
+    result = "Either Father or Mother is the Same Family"
+  elif (float(percentInformative) >= not_informative_min) and (float(percentInformative) <= not_informative_max) and (float(percentMismatch) >= not_mismatch_min) and (float(percentMismatch) <= not_mismatch_max) :
+    result = "Neither Father nor Mother"
+  else :
+    result = "There are some Problem with vcf file"
+  print(result)
   ######################################################## CAL INFORMATIVE, UNINFORMATIVE AND MISMATCH ########################################################
 
-  return render_template('result.html', percentInformative = percentInformative, percentUninformative = percentUninformative, percentMismatch = percentMismatch)
+  return render_template('result.html', percentInformative = percentInformative, percentUninformative = percentUninformative, percentMismatch = percentMismatch, result = result)

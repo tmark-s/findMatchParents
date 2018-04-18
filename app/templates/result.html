@@ -11,6 +11,37 @@
     <div class="container">
         <div align="center">
           <canvas id="myChart" style="max-width: 1000px;"></canvas>
+				</div>
+				<div class="row">
+					<div class="col-md-3 offset-md-3 ">
+						<img src="{{ url_for('static', filename='man.png')}}" width="150" height="150" />
+					</div>
+					<div class="col-md-3">
+						{% if result == 'Same Family' %}
+							<img src="{{ url_for('static', filename='check.png')}}" width="150" height="150" />
+						{% elif result == 'Neither Father nor Mother' %}
+							<img src="{{ url_for('static', filename='cancel.png')}}" width="150" height="150" />
+						{% elif result == 'Either Father or Mother is the Same Family' %}
+							<img src="{{ url_for('static', filename='question.png')}}" width="150" height="150" />
+						{% endif %}
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-3 offset-md-3 ">
+						<img src="{{ url_for('static', filename='woman.png')}}" width="150" height="150" />
+					</div>
+					<div class="col-md-3">
+						{% if result == 'Same Family' %}
+							<img src="{{ url_for('static', filename='check.png')}}" width="150" height="150" />
+						{% elif result == 'Neither Father nor Mother' %}
+							<img src="{{ url_for('static', filename='cancel.png')}}" width="150" height="150" />
+						{% elif result == 'Either Father or Mother is the Same Family' %}
+							<img src="{{ url_for('static', filename='question.png')}}" width="150" height="150" />
+						{% endif %}
+					</div>
+				</div>
+        <div align="center">
+            {{ result }}
         </div>
     </div>
 

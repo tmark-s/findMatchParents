@@ -4,30 +4,60 @@
 {% include "navbar.html" %}
 <div class="container">
     <fieldset>
-      <form action="/result" method="post", enctype='multipart/form-data'>
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text">Child File</span>
-          </div>
-          <div class="custom-file">
-            <input name="child" type="file" class="custom-file-input" id="inputGroupFile01" required>
-            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+      <form action="/result" method="post", enctype='multipart/form-data' style="margin-top: 15%">
+        <h1 align="center" style="margin-bottom: 100px">Please Upload Child File, Father File and Mother File</h1>
+        <div align="center">
+          <div class="input-group mb-3" style="width: 500px">
+            <div class="input-group-prepend">
+              <span class="input-group-text" style="width: 100px">Child File</span>
+            </div>
+            <div class="custom-file" id="child">
+              <input name="child" type="file" class="custom-file-input" id="child-input" required onchange="changeFileName('#child', '#child-input')">
+              <label class="custom-file-label" for="inputGroupFile01" align="left">Choose file</label>
+            </div>
           </div>
         </div>
-          
         
-        <div>
-          <input name="dad" type="file" class="ghost-input" required>
+        <div align="center">
+          <div class="input-group mb-3" style="width: 500px">
+            <div class="input-group-prepend">
+              <span class="input-group-text" style="width: 100px">Father File</span>
+            </div>
+            <div class="custom-file" id="dad">
+              <input name="dad" type="file" class="custom-file-input" id="dad-input" required onchange="changeFileName('#dad', '#dad-input')">
+              <label class="custom-file-label" for="inputGroupFile01" align="left">Choose file</label>
+            </div>
+          </div>
         </div>
-        <div>
-          <input name="mom" type="file" class="ghost-input" required>
+        
+        <div align="center">
+          <div class="input-group mb-3" style="width: 500px">
+            <div class="input-group-prepend">
+              <span class="input-group-text" style="width: 100px">Mother File</span>
+            </div>
+            <div class="custom-file" id="mom">
+              <input name="mom" type="file" class="custom-file-input" id="mom-input" required onchange="changeFileName('#mom', '#mom-input')">
+              <label class="custom-file-label" for="inputGroupFile01" align="left">Choose file</label>
+            </div>
+          </div>
         </div>
-        <div>
-          <input type="submit" class="ghost-button" value="Submit">
+        
+        <div align="center">
+          <input type="submit" class="btn btn-primary" value="Submit" style="width: 500px">
         </div>
       </form>
     </fieldset>
   </div>
+
   
+  <script>
+    // $(document).ready(function() {
+      
+    // });
+    function changeFileName(id, input_id) {
+      var fileName = $('input[type=file]' + input_id).val().split('\\').pop();
+      $(id + ' label').text(fileName);
+    }
+  </script>
 
 {% endblock %}

@@ -10,9 +10,23 @@
     {% include "navbar.html" %}
     <div class="container">
         <div align="center">
-          <canvas id="myChart" style="max-width: 1000px;"></canvas>
-				</div>
-				<div class="row">
+          <canvas id="myChart" style="max-width: 1000px; margin-bottom: 100px"></canvas>
+          <h1 align="center">Result</h1>
+          {% if result == 'Same Family' %}
+            <div class="alert alert-success" role="alert" style="width: 500px">
+              Same Family
+            </div>
+          {% elif result == 'Neither Father nor Mother' %}
+            <div class="alert alert-danger" role="alert" style="width: 500px">
+              Neither Father nor Mother
+            </div>
+          {% elif result == 'Either Father or Mother is the Same Family' %}
+            <div class="alert alert-warning" role="alert" style="width: 500px">
+                Either Father or Mother is the Same Family
+            </div>
+          {% endif %}
+		</div>
+				<div class="row" align="center" style="margin-bottom: 20px">
 					<div class="col-md-3 offset-md-3 ">
 						<img src="{{ url_for('static', filename='man.png')}}" width="150" height="150" />
 					</div>
@@ -26,7 +40,7 @@
 						{% endif %}
 					</div>
 				</div>
-				<div class="row">
+				<div class="row" align="center" style="margin-bottom: 100px">
 					<div class="col-md-3 offset-md-3 ">
 						<img src="{{ url_for('static', filename='woman.png')}}" width="150" height="150" />
 					</div>
@@ -40,9 +54,6 @@
 						{% endif %}
 					</div>
 				</div>
-        <div align="center">
-            {{ result }}
-        </div>
     </div>
 
 
